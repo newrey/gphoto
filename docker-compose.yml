@@ -1,0 +1,48 @@
+version: '2'
+
+services:
+  test-front:
+    volumes:
+      - /T_DRIVE/source:/data
+      - /T_DRIVE/meta:/code/media
+    build: front/
+    ports:
+      - 5000:5000
+      
+  ownphotos:
+    image: ownphotos-frontend
+    environment:
+      - ADMIN_EMAIL=mail@admin.com
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=123456
+      - REDIS_PORT=6379
+      - MAPBOX_API_KEY=sk.eyJ1IjoibmV3cmV5IiwiYSI6ImNqbjQ0ZXA4NjA2bmYzcW4wOXVuMDdteXIifQ.13FWr_NqIa3x8syr4ka-vw
+      - BACKEND_HOST=192.168.99.100:8000
+    volumes:
+      - /T_DRIVE/source:/data
+      - /T_DRIVE/meta:/code/media
+    ports:
+      - 8000:8000
+      - 5001:5000
+    build: .
+
+  database:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: ownphotos
+      POSTGRES_USER: ownphotos
+      POSTGRES_PASSWORD: ownphotos
+    volumes:
+      - ownphotos-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+volumes:
+    # ownphotos-metadata:
+    ownphotos-db:
+    ownphotos-redis:
