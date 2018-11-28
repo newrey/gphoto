@@ -20,5 +20,5 @@ ENV BACKEND_URL=http://192.168.99.100:8000
 RUN sed -i -e "s|http://changeme|$BACKEND_URL|g" /code/ownphotos-frontend/src/api_client/apiClient.js
 
 RUN npm run build
-
+COPY entrypoint-front.sh /code
 ENTRYPOINT ./entrypoint-front.sh
