@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  test-front:
+  front:
     volumes:
       - /T_DRIVE/source:/data
       - /T_DRIVE/meta:/code/media
@@ -9,8 +9,7 @@ services:
     ports:
       - 5000:5000
       
-  ownphotos:
-    image: ownphotos-frontend
+  backend:
     environment:
       - ADMIN_EMAIL=mail@admin.com
       - ADMIN_USERNAME=admin

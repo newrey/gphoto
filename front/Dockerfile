@@ -6,19 +6,23 @@ FROM node:8-alpine
 # RUN apt-get install nodejs
 
 # RUN rm -rf /var/lib/apt/lists/*
-RUN apk add git
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk add git
 
 WORKDIR /code
 RUN git clone https://github.com/hooram/ownphotos-frontend.git
 WORKDIR /code/ownphotos-frontend
 RUN mv /code/ownphotos-frontend/src/api_client/apiClientDeploy.js /code/ownphotos-frontend/src/api_client/apiClient.js
 
-RUN npm --registry https://registry.npm.taobao.org info underscore
+RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install
+RUN npm install -g serve
 
-ENV BACKEND_URL=http://192.168.99.100:8000
-RUN sed -i -e "s|http://changeme|$BACKEND_URL|g" /code/ownphotos-frontend/src/api_client/apiClient.js
+ENV BACKEND_URL=192.168.99.100:8000
+RUN sed -i -e "s|changeme|$BACKEND_URL|g" /code/ownphotos-frontend/src/api_client/apiClient.js
 
 RUN npm run build
-COPY entrypoint-front.sh /code
-ENTRYPOINT ./entrypoint-front.sh
+
+
+# RUN ls /code
+# ENTRYPOINT ./code/ownphotos-frontend/entrypoint-front.sh
+CMD [ "serve","-s","build" ]

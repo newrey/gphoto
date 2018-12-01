@@ -63,23 +63,23 @@ COPY modules/im2txt_data.tar.gz /code/api/im2txt
 RUN tar xf im2txt_data.tar.gz
 
 
-WORKDIR /
-RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt-get install nodejs
+# WORKDIR /
+# RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+# RUN bash nodesource_setup.sh
+# RUN apt-get install nodejs
 
 RUN rm -rf /var/lib/apt/lists/*
 
-WORKDIR /code
-RUN git clone https://github.com/hooram/ownphotos-frontend.git
-WORKDIR /code/ownphotos-frontend
-RUN mv /code/ownphotos-frontend/src/api_client/apiClientDeploy.js /code/ownphotos-frontend/src/api_client/apiClient.js
-RUN npm --registry https://registry.npm.taobao.org info underscore
-RUN npm install
-RUN npm install -g serve
+# WORKDIR /code
+# RUN git clone https://github.com/hooram/ownphotos-frontend.git
+# WORKDIR /code/ownphotos-frontend
+# RUN mv /code/ownphotos-frontend/src/api_client/apiClientDeploy.js /code/ownphotos-frontend/src/api_client/apiClient.js
+# RUN npm --registry https://registry.npm.taobao.org info underscore
+# RUN npm install
+# RUN npm install -g serve
 
-RUN apt-get remove --purge -y cmake git && \
-    rm -rf /var/lib/apt/lists/*
+# RUN apt-get remove --purge -y cmake git && \
+#     rm -rf /var/lib/apt/lists/*
 
 VOLUME /data
 
@@ -124,4 +124,5 @@ RUN mv /code/config_docker.py /code/config.py
 
 WORKDIR /code
 
+# ENTRYPOINT [ "tail" ]
 ENTRYPOINT ./entrypoint.sh

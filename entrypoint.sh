@@ -1,9 +1,9 @@
 #! /bin/bash
 
-cp /code/nginx.conf /etc/nginx/sites-enabled/default
+# cp /code/nginx.conf /etc/nginx/sites-enabled/default
 
-sed -i -e 's/replaceme/'"$BACKEND_HOST"'/g' /etc/nginx/sites-enabled/default
-service nginx restart
+# sed -i -e 's/replaceme/'"$BACKEND_HOST"'/g' /etc/nginx/sites-enabled/default
+# service nginx restart
 
 source /venv/bin/activate
 
@@ -19,11 +19,11 @@ EOF
 echo "Running backend server..."
 
 python manage.py rqworker default &
-gunicorn --bind 0.0.0.0:8000 ownphotos.wsgi &
+gunicorn --bind 0.0.0.0:8000 ownphotos.wsgi
 
 
-BACKEND_URL=${BACKEND_PROTOCOL}://${BACKEND_HOST}
-sed -i -e "s|http://changeme|$BACKEND_URL|g" /code/ownphotos-frontend/src/api_client/apiClient.js
-cd /code/ownphotos-frontend
-npm run build
-serve -s build
+# BACKEND_URL=${BACKEND_PROTOCOL}://${BACKEND_HOST}
+# sed -i -e "s|http://changeme|$BACKEND_URL|g" /code/ownphotos-frontend/src/api_client/apiClient.js
+# cd /code/ownphotos-frontend
+# npm run build
+# serve -s build

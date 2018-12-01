@@ -1,7 +1,10 @@
 .gitignore
+.gitattributes
 Dockerfile
+docker-compose.yml
 Makefile
 README.md
 screenshots/
 tags
 media/
+front/
